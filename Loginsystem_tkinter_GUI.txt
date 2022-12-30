@@ -1,0 +1,124 @@
+import openpyxl as openpyxl
+
+from tkinter import *
+import os
+from tkinter import messagebox
+import openpyxl
+import self as self
+from openpyxl.writer.excel import save_workbook
+
+
+# storing datas in a file - file handling
+
+# validation
+
+# def validate():
+
+# Registration form
+
+def Register():
+    global window1
+    global EMAIL
+    global Password
+    global EMAIL_entry1
+    global Password_entry1
+    EMAIL = StringVar()
+    Password = StringVar()
+    window1 = Tk()
+    window1.minsize(width=300, height=300)
+    window1.maxsize(width=300, height=300)
+    Label(window1, text="REGISTRATION FORM").pack()
+    Label(window1, text=" ").pack()
+    Button(window1, text="Email", width=15, height=3).pack()
+    EMAIL_entry1 = Entry(window1, textvariable=EMAIL)
+    EMAIL_entry1.pack()
+    Label(window1, text=" ").pack()
+    Button(window1, text="Password", width=15, height=3).pack()
+    Password_entry1 = Entry(window1, textvariable=Password)
+    Password_entry1.pack()
+    Label(window1, text=" ").pack()
+    Button(window1, text='Register', width=15, height=3, command=Register_data).pack()
+    window.mainloop()
+
+
+def Register_data():
+    EMAIL_info = EMAIL_entry1.get()
+    Password_info = Password_entry1.get()
+    filepath = "C:\\Users\SAGARISHA\PycharmProjects\pythonProject1\data.xlsx"
+    if not os.path.exists(filepath):
+          workbook = openpyxl.Workbook()
+          sheet = workbook.active
+          heading = ["Username", "Password"]
+          sheet.append(heading)
+          save_workbook(self, filepath)
+      workbook = openpyxl.load_workbook(filepath)
+      sheet = workbook.active
+      sheet.append([EMAIL_info, Password_info])
+      workbook.save(filepath)
+      Label(window1, text="Registration sucess,fg="green".pack())
+return self.Register_data
+    
+
+
+# Login page
+
+def Login():
+    global window2
+    global EMAIL
+    global Password
+    global EMAIL_entry2
+    global Password_entry2
+    EMAIL_verify = StringVar()
+    Password_verify = StringVar()
+    window2 = Tk()
+    window2.minsize(width=300, height=300)
+    window2.maxsize(width=300, height=300)
+    Label(window2, text="LOGIN FORM").pack()
+    Label(window2, text=" ").pack()
+    Button(window2, text="Email", width=15, height=3).pack()
+    EMAIL_entry2 = Entry(window2, textvariable=EMAIL_verify).pack()
+    Label(window2, text=" ").pack()
+    Button(window2, text="Password", width=15, height=3).pack()
+    Password_entry2 = Entry(window2, textvariable=Password_verify).pack()
+    Label(window2, text=" ").pack()
+    Button(window2, text='Login', width=15, height=3).pack()
+    window.mainloop()
+
+
+# validation
+
+class EMAIL_verify:
+    pass
+
+
+ def verify():
+     Email_final = EMAIL_verify.get()
+     Password_final = Password_verify.get()
+     os_list = os.listdir
+     if EMAIL_final in os_list:
+         file = open(EMAIL_final, 'r')
+         v = file.read().split()
+         if Password_final in v:
+              messagebox.showinfo('sucess', 'login sucess')
+         else:
+             messagebox.showinfo('not found', 'Password is wrong')
+     else:
+        messagebox.showinfo('no user', 'Please register yourself')
+
+
+# main window
+
+def main():
+    global window
+    window = Tk()
+    window.minsize(width=400, height=400)
+    window.maxsize(width=400, height=400)
+    Label(text="Account Register/Login form").pack()
+    Label(text=" ").pack()
+    Button(text="Login", width=15, height=3, command=Login).pack()
+    Label(text=" ").pack()
+    Button(text="Register", width=15, height=3, command=Register).pack()
+    window.mainloop()
+
+
+main()
